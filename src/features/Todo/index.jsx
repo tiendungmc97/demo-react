@@ -17,6 +17,7 @@ function Todo(props) {
         new: true,
         depending: true,
         complete: true,
+        edit: true,
         delete: true,
       },
     },
@@ -27,6 +28,7 @@ function Todo(props) {
         new: true,
         depending: true,
         complete: true,
+        edit: true,
         delete: true,
       },
     },
@@ -50,6 +52,7 @@ function Todo(props) {
         new: true,
         depending: true,
         complete: true,
+        edit: true,
         delete: true,
       },
     };
@@ -59,11 +62,18 @@ function Todo(props) {
 
   const handleStatus = (index, status) => {
     let item = [...items];
-    item[index].status = status;
+    if(status === "delete"){
+      item.splice(index, 1);
+    }else if(status === "edit"){
+
+    }   
+    else{
+      item[index].status = status;
+    }
     setItems(item);
   };
 
-  console.log("value", items);
+
   return (
     <div className="todo">
       <div className="todo__title">Todos</div>
@@ -78,7 +88,6 @@ function Todo(props) {
             value={valueInput.inputTask}
             onChange={handleInput}
           ></input>
-
           <p className="content__note">Enter what you want to procastinate </p>
           <button
             className="content_submit btn btn--primary pointer"
@@ -117,7 +126,7 @@ function Todo(props) {
                     <td>
                       {item.action.new && (
                         <button
-                          className="content__complete btn btn--primary pointer"
+                          className="btn btn--primary mr-15 pointer"
                           onClick={() => handleStatus(index, "new")}
                         >
                           New
@@ -125,7 +134,7 @@ function Todo(props) {
                       )}
                       {item.action.depending && (
                         <button
-                          className="content__complete btn btn--primary pointer"
+                          className="btn btn--primary mr-15 pointer"
                           onClick={() => handleStatus(index, "depending")}
                         >
                           Depending
@@ -133,14 +142,25 @@ function Todo(props) {
                       )}
                       {item.action.complete && (
                         <button
-                          className="content__complete btn btn--primary pointer"
+                          className="btn btn--primary mr-15 pointer"
                           onClick={() => handleStatus(index, "completed")}
                         >
                           Complete
                         </button>
                       )}
+                      {item.action.edit && (
+                        <button
+                          className="btn btn--primary mr-15 pointer"
+                          onClick={() => handleStatus(index, "edit")}
+                        >
+                          Edit
+                        </button>
+                      )}
                       {item.action.delete && (
-                        <button className="content__delete btn btn--secondary pointer">
+                        <button
+                          className="btn btn--secondary mr-15 pointer"
+                          onClick={() => handleStatus(index, "delete")}
+                        >
                           Delete
                         </button>
                       )}
