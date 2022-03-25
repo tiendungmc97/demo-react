@@ -1,11 +1,12 @@
-import logo from './logo.svg';
-import Todo from './features/Todo';
-import './styles/index.scss';
+import FormInfor from "./features/FormInfor";
+import Todo from "./features/Todo";
+import "./styles/index.scss";
 
 function App() {
   return (
     <div className="App">
-      <Todo></Todo>
+      {/* <Todo></Todo> */}
+      <FormInfor/>
     </div>
   );
 }
