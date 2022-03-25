@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { Col, FormGroup, FormText, Input, Label, Row } from "reactstrap";
 import Forms from "./components/Forms";
 
-FormInfor.propTypes = {
+FormUser.propTypes = {
   
 };
 
-function FormInfor(props) {
+function FormUser(props) {
   return (
     <div>
         <Row className="m-30">
@@ -23,4 +23,4 @@ function FormInfor(props) {
   );
 }
 
-export default FormInfor;
+export default FormUser;
