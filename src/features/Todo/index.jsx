@@ -18,7 +18,7 @@ const inititems = [
     name: "Aflreds Futterkiste",
     status: "new",
     action: {
-      new: true,
+      new: false,
       depending: true,
       complete: true,
       edit: true,
