@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import { Col, FormGroup, FormText, Input, Label, Row } from "reactstrap";
 import Forms from "./components/Forms";
 
-FormInfor.propTypes = {};
+FormInfor.propTypes = {
+  
+};
 
 function FormInfor(props) {
   return (
