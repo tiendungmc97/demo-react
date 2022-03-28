@@ -28,6 +28,7 @@ function Forms(props) {
     checkbox: "",
     image: "",
   });
+
   const handleInput = (e) => {
     let { value, name, checked, type } = e.target;
     setInputValue({
@@ -48,7 +49,7 @@ function Forms(props) {
   return (
     <div>
       <FormGroup>
-        <Label for="nameLabel">Họ tên::::</Label>
+        <Label for="nameLabel">Họ tên:</Label>
         <Input type="text" name="name" id="nameLabel" placeholder="Họ tên" />
       </FormGroup>
       <FormGroup>

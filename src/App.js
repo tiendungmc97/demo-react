@@ -1,12 +1,10 @@
-import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
-import AppHeader from "./components/appHeader";
-import FormUser from "./features/FormInfor";
-import Home from "./features/Home";
+import FormInfor from "./features/FormInfor";
 import Todo from "./features/Todo";
 import "./styles/index.scss";
 
 function App() {
   return (
+<<<<<<< HEAD
     <div className="App">   
       <Router>
           <AppHeader />
@@ -18,6 +16,10 @@ function App() {
             <Route path="/" element={<Home/>}/>
           </Routes>
       </Router>
+    <div className="App">
+      <Todo></Todo>
+      <h2>Test: add ssh key for git</h2>
+      <FormInfor/>
     </div>
   );
 }
