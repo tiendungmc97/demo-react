@@ -12,6 +12,7 @@ function App() {
           <AppHeader />
 
           {/* nhanh cua dung */}
+          {/* Test git */}
           <Routes>
             <Route path="/todo" element={<Todo/>}/>
             <Route path="/form" element={<FormUser/>}/>
