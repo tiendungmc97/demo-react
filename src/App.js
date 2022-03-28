@@ -10,6 +10,8 @@ function App() {
     <div className="App">   
       <Router>
           <AppHeader />
+
+          {/* nhanh cua dung */}
           <Routes>
             <Route path="/todo" element={<Todo/>}/>
             <Route path="/form" element={<FormUser/>}/>
