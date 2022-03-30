@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./style.scss";
 import classnames from "classnames";
+import ModalExample from "../Modal";
 
 Todo.propTypes = {};
 
@@ -34,6 +35,7 @@ function Todo(props) {
     },
   ];
   const [items, setItems] = useState(inititems);
+  const [value,setValue] = useState('');
 
   const handleInput = (e) => {
     const { value, name } = e.target;
@@ -65,15 +67,29 @@ function Todo(props) {
     if(status === "delete"){
       item.splice(index, 1);
     }else if(status === "edit"){
-
+        setValue(item[index].name) 
+       item.splice(index, 1)
     }   
     else{
       item[index].status = status;
     }
     setItems(item);
   };
+const handleUpdate = (text) => {
 
-
+  let abcl =  {
+    name: text,
+    status: "new",
+    action: {
+      new: true,
+      depending: true,
+      complete: true,
+      edit: true,
+      delete: true,
+    },
+  }
+  setItems(prev => [...prev, abcl])
+}
   return (
     <div className="todo">
       <div className="todo__title">Todos</div>
@@ -150,10 +166,10 @@ function Todo(props) {
                       )}
                       {item.action.edit && (
                         <button
-                          className="btn btn--primary mr-15 pointer"
+                          className="btn  mr-15 pointer"
                           onClick={() => handleStatus(index, "edit")}
                         >
-                          Edit
+                          <ModalExample handleUpdate ={handleUpdate} value ={value}/>
                         </button>
                       )}
                       {item.action.delete && (
@@ -172,6 +188,7 @@ function Todo(props) {
           </table>
         </div>
       </div>
+         
     </div>
   );
 }
