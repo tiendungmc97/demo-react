@@ -23,21 +23,17 @@ function Todo() {
 
   const [ items , setItems ] = useState(initItems)
 
-  const [valueInput , setItemInput ] = useState({hello:''})
+  const [valueInput , setItemInput ] = useState('')
 
   console.log(valueInput)
 
   const handleInput = (e) => {
-    const { name , value } = e.target
-    setItemInput({
-      ...valueInput,
-      [name]: value
-    })
+    setItemInput(e.target.value)
   }
 
   const handleSubmit = () => {
     const schema = {
-      name : valueInput.nameInput,
+      name : valueInput,
       status : 'new',
       action: {
         new: true,
@@ -62,8 +58,7 @@ function Todo() {
           <input
             className="content__input-todo"
             placeholder="What do you wants to do?"
-            name="nameInput"
-            value={valueInput.nameInput}
+            value={valueInput}
             onChange={handleInput}
           ></input>
           <p className="content__note">Enter what you want to procastinate </p>
@@ -95,8 +90,6 @@ function Todo() {
                       new: item.status === "new",
                       completed: item.status === "completed",
                       depending: item.status === "depending",
-                      "btn-pre": true,
-                      disabvle: true,
                     })}
                   >
                     <td>{item.name}</td>
