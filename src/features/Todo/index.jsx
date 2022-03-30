@@ -25,7 +25,7 @@ function Todo() {
 
   const [valueInput , setItemInput ] = useState('')
 
-  console.log(valueInput)
+  // console.log(valueInput)
 
   const handleInput = (e) => {
     setItemInput(e.target.value)
@@ -46,6 +46,23 @@ function Todo() {
     items.push(schema)
     setItems(items)
     setItemInput('')
+  }
+
+  const handleStatus = (index, status) => {
+    const item = [...items]
+    item[index].status = status
+    setItems(item)
+  }
+
+  const handleDelete = (index) => {
+    const item = [...items]
+    item.splice(index,1)
+    setItems(item)
+    console.log(index)
+  }
+
+  const handleEdit = () => {
+    
   }
 
   return (
@@ -98,7 +115,7 @@ function Todo() {
                       {item.action.new && (
                         <button
                           className="btn btn--primary mr-15 pointer"
-                          // onClick={() => handleStatus(index, "new")}
+                          onClick={() => handleStatus(index, "new")}
                         >
                           New
                         </button>
@@ -106,7 +123,7 @@ function Todo() {
                       {item.action.depending && (
                         <button
                           className="btn btn--primary mr-15 pointer"
-                          // onClick={() => handleStatus(index, "depending")}
+                          onClick={() => handleStatus(index, "depending")}
                         >
                           Depending
                         </button>
@@ -114,7 +131,7 @@ function Todo() {
                       {item.action.complete && (
                         <button
                           className="btn btn--primary mr-15 pointer"
-                          // onClick={() => handleStatus(index, "completed")}
+                          onClick={() => handleStatus(index, "completed")}
                         >
                           Complete
                         </button>
@@ -122,7 +139,7 @@ function Todo() {
                       {item.action.edit && (
                         <button
                           className="btn btn--primary mr-15 pointer"
-                          // onClick={() => handleStatus(index, "edit")}
+                          onClick={() => handleEdit()}
                         >
                           Edit
                         </button>
@@ -130,7 +147,7 @@ function Todo() {
                       {item.action.delete && (
                         <button
                           className="btn btn--secondary mr-15 pointer"
-                          // onClick={() => handleStatus(index, "delete")}
+                          onClick={ () => handleDelete (index)}
                         >
                           Delete
                         </button>
