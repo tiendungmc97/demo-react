@@ -15,7 +15,7 @@ Todo.propTypes = {};
 
 const inititems = [
   {
-    name: "Aflreds Futterkiste",
+    name: "Tuancandongsang",
     status: "new",
     action: {
       new: false,
@@ -56,6 +56,7 @@ function Todo(props) {
         delete: true,
       },
     };
+    valueInput = '';
     item.push(schema);
     setItems(item);
   };
