@@ -1,13 +1,11 @@
 import "./style.scss";
-import PropTypes from "prop-types";
 import React , {useState} from 'react'
 import classnames from 'classnames'
 
 
 
-Todo.propTypes = {};
 
-function Todo(props) {
+function Todo() {
 
   const initItems = [
     {
@@ -25,14 +23,32 @@ function Todo(props) {
 
   const [ items , setItems ] = useState(initItems)
 
-  const [itemInput , setItemInput ] = useState('')
+  const [valueInput , setItemInput ] = useState({hello:''})
 
-  console.log(itemInput)
+  console.log(valueInput)
 
   const handleInput = (e) => {
-    setItemInput(e.target.value)
+    const { name , value } = e.target
+    setItemInput({
+      ...valueInput,
+      [name]: value
+    })
   }
+
   const handleSubmit = () => {
+    const schema = {
+      name : valueInput.nameInput,
+      status : 'new',
+      action: {
+        new: true,
+        depending: true,
+        complete: true,
+        edit: true,
+        delete: true,
+      }
+    }
+    items.push(schema)
+    setItems(items)
     setItemInput('')
   }
 
@@ -46,7 +62,8 @@ function Todo(props) {
           <input
             className="content__input-todo"
             placeholder="What do you wants to do?"
-            value={itemInput}
+            name="nameInput"
+            value={valueInput.nameInput}
             onChange={handleInput}
           ></input>
           <p className="content__note">Enter what you want to procastinate </p>
@@ -70,7 +87,7 @@ function Todo(props) {
               </tr>
             </thead>
             <tbody>
-              {items?.map((item, index) => {
+              {items.map((item, index) => {
                 return (
                   <tr
                     key={index}
