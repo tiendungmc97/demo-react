@@ -5,6 +5,7 @@ import classnames from 'classnames'
 
 
 
+
 function Todo() {
 
   const initItems = [
@@ -58,16 +59,55 @@ function Todo() {
     const item = [...items]
     item.splice(index,1)
     setItems(item)
-    console.log(index)
   }
 
   const handleEdit = () => {
+
+  }
+
+  var colorClass = 
+    {
+      r:'r',
+      g:'g',
+      b:'b'
+    }
+
+
+  const colorClick = (color) => {
+    if ( color === 'r') {
+      colorClass.r = color
+    }
+    if ( color === 'g') {
+      colorClass.g = color
+    }
+    if ( color === 'b') {
+      colorClass.b = color
+    }
     
   }
 
+
+
   return (
     <div className="todo">
-      <div className="todo__title">Todos</div>
+      <div className="todo__title"
+        onClick={colorClick('r')}
+      >Todos R</div>
+      <div className="todo__title"
+        onClick={colorClick('g')}
+      >Todos G</div>
+      <div className="todo__title"
+        onClick={colorClick('b')}
+      >Todos B</div>
+
+      <h1
+        className={classnames({
+          r: colorClass.r === 'r',
+          b: colorClass.b === 'b',
+          g: colorClass.g === 'g',
+        })}
+      > Hello </h1>
+
       <div className="todo__add add">
         <div className="add__title">Add a task</div>
         <div className="add__content content">
