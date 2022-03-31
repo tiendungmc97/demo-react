@@ -1,7 +1,7 @@
 import "./style.scss";
 import React , {useState} from 'react'
 import classnames from 'classnames'
-
+import Edit from "./components/TableTask";
 
 
 
@@ -49,12 +49,6 @@ function Todo() {
     setItemInput('')
   }
 
-  const handleStatus = (index, status) => {
-    const item = [...items]
-    item[index].status = status
-    setItems(item)
-  }
-
   const handleDelete = (index) => {
     const item = [...items]
     item.splice(index,1)
@@ -65,49 +59,15 @@ function Todo() {
 
   }
 
-  var colorClass = 
-    {
-      r:'r',
-      g:'g',
-      b:'b'
-    }
-
-
-  const colorClick = (color) => {
-    if ( color === 'r') {
-      colorClass.r = color
-    }
-    if ( color === 'g') {
-      colorClass.g = color
-    }
-    if ( color === 'b') {
-      colorClass.b = color
-    }
-    
+  const handleStatus = (index, status) => {
+    const item = [...items]
+    item[index].status = status
+    setItems(item)
   }
-
-
 
   return (
     <div className="todo">
-      <div className="todo__title"
-        onClick={colorClick('r')}
-      >Todos R</div>
-      <div className="todo__title"
-        onClick={colorClick('g')}
-      >Todos G</div>
-      <div className="todo__title"
-        onClick={colorClick('b')}
-      >Todos B</div>
-
-      <h1
-        className={classnames({
-          r: colorClass.r === 'r',
-          b: colorClass.b === 'b',
-          g: colorClass.g === 'g',
-        })}
-      > Hello </h1>
-
+      <div className="todo__title">Todos </div>
       <div className="todo__add add">
         <div className="add__title">Add a task</div>
         <div className="add__content content">
@@ -144,9 +104,9 @@ function Todo() {
                   <tr
                     key={index}
                     className={classnames({
-                      new: item.status === "new",
-                      completed: item.status === "completed",
-                      depending: item.status === "depending",
+                      new : item.status === 'new',
+                      depending : item.status === 'depending',
+                      complete : item.status === 'complete',
                     })}
                   >
                     <td>{item.name}</td>
@@ -155,7 +115,7 @@ function Todo() {
                       {item.action.new && (
                         <button
                           className="btn btn--primary mr-15 pointer"
-                          onClick={() => handleStatus(index, "new")}
+                          onClick={() => handleStatus( index , 'new')}
                         >
                           New
                         </button>
@@ -163,7 +123,7 @@ function Todo() {
                       {item.action.depending && (
                         <button
                           className="btn btn--primary mr-15 pointer"
-                          onClick={() => handleStatus(index, "depending")}
+                          onClick={() => handleStatus( index , 'depending')}
                         >
                           Depending
                         </button>
@@ -171,7 +131,7 @@ function Todo() {
                       {item.action.complete && (
                         <button
                           className="btn btn--primary mr-15 pointer"
-                          onClick={() => handleStatus(index, "completed")}
+                          onClick={() => handleStatus( index , 'complete')}
                         >
                           Complete
                         </button>
@@ -200,7 +160,11 @@ function Todo() {
           </table>
         </div>
       </div>
+
+      <Edit />
+
     </div>
+    
   );
 }
 
