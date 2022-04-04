@@ -1,100 +1,33 @@
-import "./style.scss";
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import "./style.scss";
 import classnames from "classnames";
-import Edit from "./components/TableTask";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Modal, Button } from "reactstrap";
 
-function Todo() {
-    document.onkeyup = function (e) {
-        switch (e.which) {
-            case 13:
-                handleSubmit();
-                break;
-        }
-    };
-
-    const initItems = [
-        {
-            name: "tuancandongsang",
-            status: "new",
-            action: {
-                new: true,
-                depending: true,
-                complete: true,
-                edit: true,
-                delete: true,
-            },
+Todo.propTypes = {};
+const initItem = [
+    {
+        name: "task 1",
+        status: "new",
+        action: {
+            new: true,
+            depending: true,
+            complete: true,
+            edit: true,
+            delete: true,
         },
-    ];
+    },
+];
 
-    const [items, setItems] = useState(initItems);
+function Todo(props) {
+    const [items, setItems] = useState(initItem);
 
-    const [valueInput, setItemInput] = useState("");
-
-    // console.log(valueInput)
-
-    const handleInput = (e) => {
-        setItemInput(e.target.value);
-    };
-
-    const handleStatus = (index, status) => {
-        const item = [...items];
-        item[index].status = status;
-        setItems(item);
-    };
+    const [inputValue, setInputValue] = useState({ inputTask: "" });
 
     const handleSubmit = () => {
-        const schema = {
-            name: valueInput,
-            status: "new",
-            action: {
-                new: true,
-                depending: true,
-                complete: true,
-                edit: true,
-                delete: true,
-            },
-        };
-        items.push(schema);
-        setItems(items);
-        setItemInput("");
-    };
-
-    const handleDelete = (index) => {
-        const item = [...items];
-        item.splice(index, 1);
-        setItems(item);
-    };
-
-    var EditTodo = document.querySelector(".modal1");
-    const handleEdit = (index) => {
-        setItemInput({
-            ...valueInput,
-            inputEdit: items[index].name,
-            indexEdit: index,
-          });
-          valueInput.inputEdit = items[index].name;
-
-
-        EditTodo.classList.add("display");
-        EditTodo.onkeyup = function (e) {
-            switch (e.which) {
-                case 13:
-                    handleSaveChange();
-                    edit__close();
-                    break;
-                case 27:
-                    EditTodo.classList.remove("display");
-                    break;
-            }
-        };
-    };
-
-    const handleSaveChange = () => {
+        const task = inputValue.inputTask;
         const item = [...items];
         const schema = {
-            name: valueInput.inputEdit,
+            name: task,
             status: "new",
             action: {
                 new: true,
@@ -106,16 +39,53 @@ function Todo() {
         };
         item.push(schema);
         setItems(item);
-        // setItemInput("");
+        setInputValue({ inputTask: "" });
+    };
+    const onChangeInput = (e) => {
+        const { name, value } = e.target;
+        setInputValue({
+            ...inputValue,
+            [name]: value,
+        });
+        // console.log(inputValue.inputTask);
     };
 
-    const edit__close = () => {
-        EditTodo.classList.remove("display");
+    const handleDelete = (index) => {
+        const item = [...items];
+        item.splice(index, 1);
+        setItems(item);
+    };
+
+    const handleStatus = (index, status) => {
+        const item = [...items];
+        item[index].status = status;
+        setItems(item);
+    };
+
+    const [modalEdit, setModalEdit] = useState(false);
+
+    const handleEdit = (index) => {
+        setModalEdit(!modalEdit);
+        const item = [...items];
+        console.log(item[index].name);
+        document.onkeyup = function (e) {
+            switch (e.which) {
+                case 27:
+                    setModalEdit(false);
+                    break;
+            }
+        };
+    };
+
+    const [inputValueEdit, setinputValueEdit] = useState('');
+
+    const onChangeInputEdit = (e) => {
+        setinputValueEdit(inputValueEdit);
     };
 
     return (
         <div className="todo">
-            <div className="todo__title">Todos </div>
+            <div className="todo__title">Todos</div>
             <div className="todo__add add">
                 <div className="add__title">Add a task</div>
                 <div className="add__content content">
@@ -123,9 +93,11 @@ function Todo() {
                     <input
                         className="content__input-todo"
                         placeholder="What do you wants to do?"
-                        value={valueInput}
-                        onChange={handleInput}
+                        name="inputTask"
+                        onChange={onChangeInput}
+                        value={inputValue.inputTask}
                     ></input>
+                   
                     <p className="content__note">
                         Enter what you want to procastinate{" "}
                     </p>
@@ -140,7 +112,7 @@ function Todo() {
             <div className="todo__task task">
                 <div className="task__title">Task</div>
                 <div className="task__content content">
-                    <table className="table table-striped">
+                    <table className="task__table table">
                         <thead>
                             <tr>
                                 <th>Items </th>
@@ -155,8 +127,10 @@ function Todo() {
                                         key={index}
                                         className={classnames({
                                             new: item.status === "new",
-                                            depending: item.status === "depending",
-                                            complete: item.status === "complete",
+                                            depending:
+                                                item.status === "depending",
+                                            complete:
+                                                item.status === "complete",
                                         })}
                                     >
                                         <td>{item.name}</td>
@@ -185,7 +159,7 @@ function Todo() {
                                                         )
                                                     }
                                                 >
-                                                    Depending
+                                                    depending
                                                 </button>
                                             )}
                                             {item.action.complete && (
@@ -198,27 +172,27 @@ function Todo() {
                                                         )
                                                     }
                                                 >
-                                                    Complete
+                                                    complete
                                                 </button>
                                             )}
                                             {item.action.edit && (
                                                 <button
-                                                    className="btn btn--primary mr-15 pointer"
                                                     onClick={() =>
                                                         handleEdit(index)
                                                     }
+                                                    className="btn btn--primary mr-15 pointer"
                                                 >
-                                                    Edit
+                                                    edit
                                                 </button>
                                             )}
                                             {item.action.delete && (
                                                 <button
-                                                    className="btn btn--secondary mr-15 pointer"
                                                     onClick={() =>
                                                         handleDelete(index)
                                                     }
+                                                    className="btn btn--primary mr-15 pointer"
                                                 >
-                                                    Delete
+                                                    delete
                                                 </button>
                                             )}
                                         </td>
@@ -230,53 +204,55 @@ function Todo() {
                 </div>
             </div>
 
-            <div className="modal1" tabindex="-1">
-                <div className="modal1__overlay" onClick={edit__close}>
-                    {" "}
-                </div>
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Ban co muon Edit</h5>
-                            <button
-                                onClick={edit__close}
-                                type="button"
-                                className="btn-close edit__close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="input-group mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    name="inputEdit"
-                                    value={valueInput.inputEdit}
-                                    onChange={handleInput}
-                                />
+            {modalEdit && (
+                <div className="modal" tabIndex="-1">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Edit</h5>
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                    onClick={() => setModalEdit(false)}
+                                ></button>
                             </div>
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                onClick={edit__close}
-                                type="button"
-                                className="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                            >
-                                Close
-                            </button>
-                            <button
-                                onClick={handleSaveChange}
-                                type="button"
-                                className="btn btn-primary"
-                            >
-                                Save changes
-                            </button>
+                            <div className="modal-body">
+                                <div className="input-group mb-3">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="thong tin can sua"
+                                        aria-label="Username"
+                                        aria-describedby="basic-addon1"
+                                        title="thong tin can sua"
+                                        // name="inputEdit"
+                                        value={inputValueEdit}
+                                        onChange={(e) => onChangeInputEdit()}
+                                    />
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                    onClick={() => setModalEdit(false)}
+                                >
+                                    Close
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                >
+                                    Save changes
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
