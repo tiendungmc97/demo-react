@@ -75,13 +75,18 @@ function Todo(props) {
                     break;
             }
         };
-    };
 
-    const [inputValueEdit, setinputValueEdit] = useState('');
+        
+      };
 
-    const onChangeInputEdit = (e) => {
-        setinputValueEdit(inputValueEdit);
-    };
+      const [inputValueEdit, setinputValueEdit] = useState('');
+      const onChangeInputEdit = (e) => {
+          // const { name , value } = e.target
+          // setinputValueEdit({
+          //   ...inputValueEdit,
+          //   [name] : value
+          // });
+      };
 
     return (
         <div className="todo">
@@ -97,7 +102,7 @@ function Todo(props) {
                         onChange={onChangeInput}
                         value={inputValue.inputTask}
                     ></input>
-                   
+
                     <p className="content__note">
                         Enter what you want to procastinate{" "}
                     </p>
@@ -227,8 +232,8 @@ function Todo(props) {
                                         aria-label="Username"
                                         aria-describedby="basic-addon1"
                                         title="thong tin can sua"
-                                        // name="inputEdit"
-                                        value={inputValueEdit}
+                                        name="inputEdit"
+                                        value={inputValueEdit.inputEdit}
                                         onChange={(e) => onChangeInputEdit()}
                                     />
                                 </div>
